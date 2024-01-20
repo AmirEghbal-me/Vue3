@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ title }}</h1>
+        <h2>{{ username }}</h2>
+        <a :href="url" :alt="getLinkAlt()">Google</a><br>
+        <span v-on:click="increaseCount(2,$event)">{{ count  }}</span>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const App = {
+            data(){
+                return{
+                    title: 'Amir Eghbal',
+                    username: 'aieghbal',
+                    url : 'https://www.google.com',
+                    count : 0
+                }
+            },
+            methods: {
+                getLinkAlt(){
+                    return 'Google link';
+                },
+                increaseCount(num,event){   //pass paramater and event to vuejs method
+                    console.log(event);
+                    this.count+=num
+                }
+            }
+        }
+        Vue.createApp(App).mount('#app');
+    </script>
+</body>
+</html>
