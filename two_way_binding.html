@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <form>
+            <input type="text" v-model="title">
+            <textarea @input="title = $event.target.value" cols="30" rows="5" v-model="title"></textarea>
+        </form>
+        <div>{{ title }}</div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const App = {
+            data(){
+                return{
+                    title: 'Amir Eghbal',
+                    count : 0
+                }
+            },
+            methods: {
+                
+            }
+        }
+        Vue.createApp(App).mount('#app');
+    </script>
+</body>
+</html>
