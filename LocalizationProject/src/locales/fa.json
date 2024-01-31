@@ -1,0 +1,5 @@
+{
+  "title": "تو موفق شدی!",
+  "description": "تو با موفقیت یک پروژه ساختی با\n<a target=\"_blank\" href=\"{viteRef}\">Vite</a> +\n<a target=\"_blank\" href=\"{vueRef}\">Vue 3</a>.",
+  "documentation": "مستندات"
+}
