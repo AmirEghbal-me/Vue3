@@ -122,6 +122,7 @@ export default {
           >
             <v-btn small @click="handleAction(item)">عملیات</v-btn>
           </v-col>
+
         </v-row>
       </v-container>
 
@@ -158,8 +159,8 @@ export default {
         this.loading = true;
         this.loadingText = 'Loading...';
         const response = await axios.post('http://localhost:8000/api/users'); // Replace with your API endpoint
-        this.totalItems = response.data.length;
-        this.items = response.data;
+        this.totalItems = response.data.data.length;
+        this.items = response.data.data;
         this.loading = false;
       } catch (error) {
         console.error('Error loading data:', error);
@@ -178,3 +179,56 @@ export default {
   },
 };
 </script>
+
+<!--<template>
+  <v-data-table
+      :headers="headers"
+      :items="users"
+      :pagination.sync="pagination"
+      @pagination="fetchUsers"
+  ></v-data-table>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      headers: [
+        { text: 'Name', value: 'name' },
+        { text: 'Email', value: 'email' },
+      ],
+      users: [],
+      pagination: {},
+    };
+  },
+  computed: {
+    currentPage() {
+      return this.pagination.current_page;
+    },
+    itemsPerPage() {
+      return this.pagination.per_page;
+    },
+  },
+  created() {
+    this.fetchUsers();
+  },
+  methods: {
+    fetchUsers() {
+      axios.post('http://localhost:8000/api/users', {
+        params: {
+          page: this.currentPage,
+        },
+      })
+          .then(response => {
+            this.users = response.data.data;
+            this.pagination = response;
+          })
+          .catch(error => {
+            console.error(error);
+          });
+    },
+  },
+};
+</script>-->
