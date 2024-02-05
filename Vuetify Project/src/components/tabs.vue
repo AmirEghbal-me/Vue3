@@ -10,6 +10,8 @@ import Carousel from './Carousel.vue'
 import Steppers from './Steppers.vue'
 import LocaleSelect from "./LocaleSelect.vue";
 import { useI18n } from 'vue-i18n'
+import JsPanel from "@/components/jsPanel.vue";
+import Dialog from "./Dialog.vue";
 const { t } = useI18n()
 </script>
 <template>
@@ -26,12 +28,14 @@ const { t } = useI18n()
       <v-tab value="one">{{ $t("bottom") }}</v-tab>
       <v-tab value="two">{{ $t("input_validation") }}</v-tab>
       <v-tab value="three">{{ $t("form_validation") }}</v-tab>
-      <v-tab value="next1">{{ $t("confirm_code") }}</v-tab>
-      <v-tab value="next2">{{ $t("Selects") }}</v-tab>
+<!--      <v-tab value="next1">{{ $t("confirm_code") }}</v-tab>-->
+<!--      <v-tab value="next2">{{ $t("Selects") }}</v-tab>-->
       <v-tab value="next3">{{ $t("datatable") }}</v-tab>
       <v-tab value="next4">{{ $t("server_datatable") }}</v-tab>
       <v-tab value="next5">{{ $t("slider") }}</v-tab>
       <v-tab value="next6">{{ $t("level") }}</v-tab>
+      <v-tab value="next7">JsPanel</v-tab>
+      <v-tab value="next8">Dialog</v-tab>
     </v-tabs>
 
     <v-card-text>
@@ -48,13 +52,13 @@ const { t } = useI18n()
           <FormValidation/><br>
         </v-window-item>
 
-        <v-window-item value="next1">
+<!--        <v-window-item value="next1">
           <OTP_Input/><br>
-        </v-window-item>
+        </v-window-item>-->
 
-        <v-window-item value="next2">
+<!--        <v-window-item value="next2">
           <Selects/><br>
-        </v-window-item>
+        </v-window-item>-->
 
         <v-window-item value="next3">
           <DataTable/><br>
@@ -70,6 +74,14 @@ const { t } = useI18n()
 
         <v-window-item value="next6">
           <Steppers/><br>
+        </v-window-item>
+
+        <v-window-item value="next7">
+          <JsPanel/><br>
+        </v-window-item>
+
+        <v-window-item value="next8">
+          <Dialog/><br>
         </v-window-item>
 
       </v-window>

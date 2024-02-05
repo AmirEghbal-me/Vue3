@@ -78,7 +78,7 @@ export default {
 };
 </script>-->
 
-<template>
+<!--<template>
   <v-data-table
       :headers="headers"
       :items="items"
@@ -178,57 +178,152 @@ export default {
     },
   },
 };
-</script>
+</script>-->
 
-<!--<template>
-  <v-data-table
+<template>
+  <v-data-table-server
+      v-model:items-per-page="itemsPerPage"
       :headers="headers"
-      :items="users"
-      :pagination.sync="pagination"
-      @pagination="fetchUsers"
-  ></v-data-table>
+      :items-length="totalItems"
+      :items="serverItems"
+      :loading="loading"
+      :search="search"
+      item-value="name"
+      @update:options="loadItems"
+  ></v-data-table-server>
 </template>
-
 <script>
 import axios from 'axios';
+const desserts = [
+  {
+    name: 'Frozen Yogurt',
+    calories: 159,
+    fat: 6.0,
+    carbs: 24,
+    protein: 4.0,
+    iron: '1',
+  },
+  {
+    name: 'Jelly bean',
+    calories: 375,
+    fat: 0.0,
+    carbs: 94,
+    protein: 0.0,
+    iron: '0',
+  },
+  {
+    name: 'KitKat',
+    calories: 518,
+    fat: 26.0,
+    carbs: 65,
+    protein: 7,
+    iron: '6',
+  },
+  {
+    name: 'Eclair',
+    calories: 262,
+    fat: 16.0,
+    carbs: 23,
+    protein: 6.0,
+    iron: '7',
+  },
+  {
+    name: 'Gingerbread',
+    calories: 356,
+    fat: 16.0,
+    carbs: 49,
+    protein: 3.9,
+    iron: '16',
+  },
+  {
+    name: 'Ice cream sandwich',
+    calories: 237,
+    fat: 9.0,
+    carbs: 37,
+    protein: 4.3,
+    iron: '1',
+  },
+  {
+    name: 'Lollipop',
+    calories: 392,
+    fat: 0.2,
+    carbs: 98,
+    protein: 0,
+    iron: '2',
+  },
+  {
+    name: 'Cupcake',
+    calories: 305,
+    fat: 3.7,
+    carbs: 67,
+    protein: 4.3,
+    iron: '8',
+  },
+  {
+    name: 'Honeycomb',
+    calories: 408,
+    fat: 3.2,
+    carbs: 87,
+    protein: 6.5,
+    iron: '45',
+  },
+  {
+    name: 'Donut',
+    calories: 452,
+    fat: 25.0,
+    carbs: 51,
+    protein: 4.9,
+    iron: '22',
+  },
+]
+
+const FakeAPI = {
+  async fetch ({ page, itemsPerPage, sortBy }) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        const start = (page - 1) * itemsPerPage
+        const end = start + itemsPerPage
+        const items = desserts.slice()
+
+        const paginated = items.slice(start, end)
+
+
+
+        resolve({ items: paginated, total: items.length })
+      }, 500)
+    })
+  },
+}
 
 export default {
-  data() {
-    return {
-      headers: [
-        { text: 'Name', value: 'name' },
-        { text: 'Email', value: 'email' },
-      ],
-      users: [],
-      pagination: {},
-    };
-  },
-  computed: {
-    currentPage() {
-      return this.pagination.current_page;
-    },
-    itemsPerPage() {
-      return this.pagination.per_page;
-    },
-  },
-  created() {
-    this.fetchUsers();
-  },
+  data: () => ({
+    itemsPerPage: 5,
+    headers: [
+      { title: 'Id', key: 'id', align: 'end' },
+      { title: 'Name', key: 'name', align: 'end' },
+      { title: 'Email', key: 'email', align: 'end' },
+    ],
+    search: '',
+    serverItems: [],
+    loading: true,
+    totalItems: 0,
+  }),
   methods: {
-    fetchUsers() {
-      axios.post('http://localhost:8000/api/users', {
-        params: {
-          page: this.currentPage,
-        },
-      })
+    loadItems ({ page, itemsPerPage, sortBy }) {
+      this.loading = true
+      const start = (page - 1) * itemsPerPage
+      const end = start + itemsPerPage
+      axios.post(`http://localhost:8000/api/users?page=${page}&perPage=${itemsPerPage}`)
           .then(response => {
-            this.users = response.data.data;
-            this.pagination = response;
+            this.serverItems = response.data.data;
+            this.totalItems = response.data.total;
+            this.loading = false;
           })
           .catch(error => {
-            console.error(error);
+            console.log(error);
+            this.loading = false;
           });
     },
   },
-};
-</script>-->
+}
+</script>
